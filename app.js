@@ -47,7 +47,8 @@ function renderImg() {
 
 
   while (prodOneIndex === prodTwoIndex || prodTwoIndex === prodThreeIndex || prodOneIndex === prodThreeIndex) {
-    prodOneIndex = randomInd();
+    prodTwoIndex = randomInd();
+    prodThreeIndex = randomInd();
   }
 
 

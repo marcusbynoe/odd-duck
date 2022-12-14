@@ -7,16 +7,24 @@
   <link rel="stylesheet"  href="style.css">
 </head>
 <body>
-  <h1>Vote For Your Favorite Product!</h1>
+  <h1>Odd Duck Products</h1>
   <main>
     <section id="img-Folder">
       <img id="productOne" src="">
       <img id="productTwo" src="">
       <img id="productThree" src="">
     </section>
-    <button id="Tally-Votes">View Results</button>
-    <ul id="results-pool"></ul>
+
+    <div>
+      <button id="Tally-Votes">View Results</button>
+    </div>
+    
+    <!-- <ul id="results-pool"></ul> -->
+    <section id="results-pool">
+      <canvas id="chart"></canvas>
+    </section>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

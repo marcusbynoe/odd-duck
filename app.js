@@ -17,6 +17,11 @@ let prodThree = document.getElementById('productThree');
 let tallyVote = document.getElementById('Tally-Votes');
 let voteList = document.getElementById('results-pool');
 
+
+//*****CANVAS ELEMENT FOR CHART*******/
+
+let canvasElem = document.getElementById('chart');
+
 //*****CONSTRUCTOR FUNCTION*******/
 
 function Product(name, imgExtension = 'jpg') {
@@ -32,11 +37,20 @@ function randomInd() {
   return Math.floor(Math.random() * productArray.length);
 }
 
-function renderImg() {
+let indexValue = [];
 
-  let prodOneIndex = randomInd();
-  let prodTwoIndex = randomInd();
-  let prodThreeIndex = randomInd();
+function renderImg() {
+  while(indexValue.length < 6){
+    let index = randomInd();
+    while(indexValue.includes(index)){
+      index = randomInd();
+    }
+    indexValue.push(index);
+  }
+console.log(indexValue);
+  let prodOneIndex = indexValue.shift();
+  let prodTwoIndex = indexValue.shift();
+  let prodThreeIndex = indexValue.shift();
 
   prodOne.src = productArray[prodOneIndex].img;
   prodTwo.src = productArray[prodTwoIndex].img;
@@ -46,10 +60,11 @@ function renderImg() {
   prodThree.title = productArray[prodThreeIndex].name;
 
 
-  while (prodOneIndex === prodTwoIndex || prodTwoIndex === prodThreeIndex || prodOneIndex === prodThreeIndex) {
-    prodTwoIndex = randomInd();
-    prodThreeIndex = randomInd();
-  }
+  // while (prodOneIndex === prodTwoIndex || prodTwoIndex === prodThreeIndex || prodOneIndex === prodThreeIndex) {
+  //   prodOneIndex = randomInd();
+  //   prodTwoIndex = randomInd();
+  //   prodThreeIndex = randomInd();
+  // }
 
 
   productArray[prodOneIndex].views++;
@@ -57,6 +72,44 @@ function renderImg() {
   productArray[prodThreeIndex].views++;
 }
 
+function renderChart() {
+  let prodNames = [];
+  let prodVotes = [];
+  let prodViews = [];
+
+  for (let i = 0; i < productArray.length; i++) {
+    prodNames.push(productArray[i].name);
+    prodVotes.push(productArray[i].votes);
+    prodViews.push(productArray[i].views)
+  }
+
+  let chartObj = {
+    type: 'bar',
+    data: {
+      labels: prodNames,
+      datasets: [{
+        label: '# of Votes',
+        data: prodVotes,
+        borderWidth: 3
+      },
+      {
+        label: '# of Views',
+        data: prodViews,
+        borderWidth: 3
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+  new Chart(canvasElem, chartObj);
+
+}
 
 // //******EVENT HANDLERS*******/
 
@@ -80,14 +133,41 @@ function handClick(event) {
 
 function showVote() {
   if (voteRound === 0) {
-    for (let i = 0; i < productArray.length; i++) {
-      let liElem = document.createElement('li');
-      liElem.textContent = `${productArray[i].name} - views: ${productArray[i].views} & votes: ${productArray[i].votes}`;
-      voteList.appendChild(liElem);
-    }
-    tallyVote.removeEventListener('click', showVote);
+    renderChart();
+    // for (let i = 0; i < productArray.length; i++) {
+    //   let liElem = document.createElement('li');
+    //   liElem.textContent = `${productArray[i].name} - views: ${productArray[i].views} & votes: ${productArray[i].votes}`;
+    //   voteList.appendChild(liElem);
+    // }
+    // tallyVote.removeEventListener('click', showVote);
   }
 }
+
+//******* CHART********/
+
+
+let ctx = document.getElementById('chart');
+
+let chartObj = {
+  type: 'bar',
+  data: {
+    labels: ['Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Chair'],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      borderWidth: 3
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+
+};
+
 
 // //*****EXECUTABLE CODE******/
 let bag1 = new Product('bag');

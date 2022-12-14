@@ -1,0 +1,39 @@
+
+/* h1 animation from codepen */
+@keyframes fadeIn { 
+  from { opacity: 0; } 
+}
+
+h1 {
+  display: block;
+  bottom: 30px;
+  
+  font: italic bold 5em/1 Bodoni, serif;
+  color: rgb(204, 191, 10);
+  text-align: center;
+  
+  animation: fadeIn 1s infinite alternate;
+}
+
+body {
+  background-color: rgb(0, 0, 0);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+img {
+  display: inline-block;
+  margin-left: 150px;
+  height: 400px;
+  width: 400px;
+  border-style: solid;
+  border-width: 4px;
+  border-radius: 25px;
+}
+
+div button {
+  margin: 0;
+  position: absolute;
+  top: 53%;
+  left: 37%;
+}
